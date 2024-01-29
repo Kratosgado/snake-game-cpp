@@ -1,0 +1,3 @@
+/home/kratosgado/projects/c++/snake-game-cpp/build/CMakeFiles/Snake_Game.dir
+/home/kratosgado/projects/c++/snake-game-cpp/build/CMakeFiles/edit_cache.dir
+/home/kratosgado/projects/c++/snake-game-cpp/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/Snake_Game.dir/Logic.cpp.o CMakeFiles/Snake_Game.dir/main.cpp.o CMakeFiles/Snake_Game.dir/Board.cpp.o -o Snake_Game  -lncurses -ltinfo 
