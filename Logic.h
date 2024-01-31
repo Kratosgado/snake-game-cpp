@@ -9,8 +9,8 @@ protected:
 
 public:
    void refresh();
-   // void snake(bool& extend);
-   // void controls();
-   // void fruits();
-   // void GameOver();
+   void snake(bool& extend);
+   void controls();
+   void fruits();
+   void GameOver();
 };

@@ -1,26 +1,29 @@
 #include "Board.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
 int Board::chooseBoard() {
-   cout << "Welcome to the snake game." << endl;
+   cout << "Welcome to the Snake game." << endl;
    int choose;
    do {
       try {
-         cout << "Choose a board. Available sizes: \n"
+         cout << "Choose a board. Available sizes:\n"
             "1. 20x20\n"
             "2. 30x30\n"
             "3. 40x40\n" << endl;
-         cout << "What is your choice?:";
+         cout << "What is your choice?: ";
          cin >> choose;
          cout << endl;
-         if (choose > 3 || choose < 1) throw("Selected option does not exit");
+         if (choose > 3 || choose < 1) {
+            throw("Selected option does not exist");
+         }
       }
       catch (char const* e) {
          cin.clear();
          cin.ignore(999, '\n');
-         system("clear");
+         std::system("clear");
          cout << e << endl << endl;
       }
    } while (choose > 3 || choose < 1);
@@ -29,9 +32,10 @@ int Board::chooseBoard() {
 }
 
 void Board::loadBoard() {
-   area = new string * [SizeX[choose]];
+   area = new std::string * [SizeX[choose]];
+
    for (int i = 0; i < SizeX[choose]; i++) {
-      area[i] = new string[SizeY[choose]];
+      area[i] = new std::string[SizeY[choose]];
    }
    headX = SizeX[choose] / 2;
    headY = SizeY[choose] / 2;
@@ -46,7 +50,7 @@ void Board::printBoard() {
             area[i][j] = head;
          }
          else if (i == fruitY && j == fruitX) {
-            area[i][j] = charFruit;
+            area[i][j] = charFruit[whichFruit];
          }
          else area[i][j] = "\u2588"; // Full block character
 
@@ -57,4 +61,32 @@ void Board::printBoard() {
          }
       }
    }
+   cout << "Score:" << score << endl;
+   cout << "\u250F"; // top left
+   for (int i = 0; i < SizeX[choose]; i++) {
+      cout << "\u2501"; // side up
+   }
+   cout << "\u2513" << endl; // top right
+
+   for (int i = 0; i < SizeY[choose]; i++) {
+      cout << "\u2503"; // left side
+      for (int j = 0; j < SizeX[choose]; j++) {
+         cout << area[i][j]; // blank
+      }
+      cout << "\u2503" << endl; // right side
+   }
+
+   cout << "\u2517"; // bottom left
+   for (int i = 0; i < SizeX[choose]; i++) {
+      cout << "\u2501"; // side bottom
+   }
+   cout << "\u251B" << endl; // bottom right
+
+}
+
+void Board::cleanUp() {
+   for (int i = 0; i < SizeX[choose]; i++) {
+      delete[] area[i];
+   }
+   delete[] area;
 }
