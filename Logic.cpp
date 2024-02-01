@@ -111,7 +111,6 @@ void Logic::controls() {
 }
 
 void Logic::GameOver() {
-
    if (headX == -1 || headX == SizeX[choose] || headY == -1 || headY == SizeY[choose]) {
       isGameOver = true;
    }
