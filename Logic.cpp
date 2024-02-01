@@ -13,7 +13,7 @@ void Logic::refresh() {
       controls();
       printBoard();
       GameOver();
-      usleep(200000);
+      std::system("sleep 2");
    } while (!isGameOver);
    getchar();
    std::system("clear");
@@ -25,13 +25,13 @@ void Logic::fruits() {
    if (headX == fruitX && headY == fruitY) {
       switch (whichFruit) {
       case 0:
-         Board::score += 5;
+         score += 5;
          break;
       case 1:
-         Board::score += 10;
+         score += 10;
          break;
       case 2:
-         Board::score += 1;
+         score += 1;
          break;
       }
       extend = true;
@@ -56,10 +56,10 @@ void Logic::snake(bool& extend) {
    bodyX[0] = headX;
    bodyY[0] = headY;
    for (int i = 1; i < bodyX.size(); i++) {
-      tempX2 = Board::bodyX[i];
-      tempY2 = Board::bodyY[i];
-      Board::bodyX[i] = tempX1;
-      Board::bodyY[i] = tempY1;
+      tempX2 = bodyX[i];
+      tempY2 = bodyY[i];
+      bodyX[i] = tempX1;
+      bodyY[i] = tempY1;
       tempX1 = tempX2;
       tempY1 = tempY2;
    }
@@ -75,47 +75,36 @@ void Logic::controls() {
    cbreak();
    noecho();
    nodelay(stdscr, TRUE);
-   int ch = getch();
 
-   if (ch != ERR) {
-      charDirection = ch;
-   }
-
-   if (!(charDirection == 'w' || charDirection == 'a' || charDirection == 's' || charDirection == 'd')) {
-      charDirection = tempDirection;
-   }
-
-   switch (charDirection) {
-   case 'w':
-      if (tempDirection == 's') { charDirection = 's'; Board::headY++; }
-      else {
-         tempDirection = charDirection;
-         Board::headY--;
-      }
-      break;
+   switch (getch()) {
    case 'a':
-      std::cout << "a" << std::endl;
-      if (tempDirection == 'd') { charDirection = 'd'; Board::headX++; }
-      else {
-         tempDirection = charDirection;
-         Board::headX--;
-      }
-      break;
-   case 's':
-      if (tempDirection == 'w') { charDirection = 'w'; Board::headY--; }
-      else {
-         tempDirection = charDirection;
-         Board::headY++;
-      }
+      snakeDirection = SnakesDirection::LEFT;
       break;
    case 'd':
-      if (tempDirection == 'a') { charDirection = 'a'; Board::headX--; }
-      else {
-         tempDirection = charDirection;
-         Board::headX++;
-      }
+      snakeDirection = SnakesDirection::RIGHT;
       break;
-   default:
+   case 'w':
+      snakeDirection = SnakesDirection::UP;
+      break;
+   case 's':
+      snakeDirection = SnakesDirection::DOWN;
+      break;
+   case 'x':
+      isGameOver = true;
+      break;
+   }
+   switch (snakeDirection) {
+   case SnakesDirection::LEFT:
+      headX--;
+      break;
+   case SnakesDirection::RIGHT:
+      headX++;
+      break;
+   case SnakesDirection::UP:
+      headY--;
+      break;
+   case SnakesDirection::DOWN:
+      headY++;
       break;
    }
    endwin();
@@ -126,8 +115,8 @@ void Logic::GameOver() {
    if (headX == -1 || headX == SizeX[choose] || headY == -1 || headY == SizeY[choose]) {
       isGameOver = true;
    }
-   for (int i = 0; i < Board::bodyX.size(); i++) {
-      if (headX == Board::bodyX[i] && headY == Board::bodyY[i]) {
+   for (int i = 0; i < bodyX.size(); i++) {
+      if (headX == bodyX[i] && headY == bodyY[i]) {
          isGameOver = true;
       }
    }
