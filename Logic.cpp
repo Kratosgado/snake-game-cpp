@@ -5,19 +5,19 @@
 #include <csignal>
 
 void Logic::refresh() {
-   Board::loadBoard();
+   loadBoard();
    do {
       std::system("clear");
       fruits();
       snake(extend);
       controls();
-      Board::printBoard();
+      printBoard();
       GameOver();
       usleep(200000);
    } while (!isGameOver);
    getchar();
    std::system("clear");
-   std::cout << "Final Score" << score << std::endl;
+   std::cout << "Final Score: " << score << std::endl;
    cleanUp();
 }
 

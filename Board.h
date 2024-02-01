@@ -15,7 +15,7 @@ protected:
    char charFruit[3] = { 'b', 'p', 'a' };
 
 public:
-   int chooseBoard();
+   void chooseBoard();
    void loadBoard();
    void printBoard();
    void cleanUp();

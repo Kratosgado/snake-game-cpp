@@ -4,9 +4,8 @@
 
 using namespace std;
 
-int Board::chooseBoard() {
+void Board::chooseBoard() {
    cout << "Welcome to the Snake game." << endl;
-   int choose;
    do {
       try {
          cout << "Choose a board. Available sizes:\n"
@@ -28,10 +27,11 @@ int Board::chooseBoard() {
       }
    } while (choose > 3 || choose < 1);
    choose--;
-   return choose;
+   return;
 }
 
 void Board::loadBoard() {
+   // dynamically allocate memory for board area
    area = new std::string * [SizeX[choose]];
 
    for (int i = 0; i < SizeX[choose]; i++) {
